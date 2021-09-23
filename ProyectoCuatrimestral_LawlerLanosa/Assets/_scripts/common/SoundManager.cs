@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
     // Juan Lanosa
     public static SoundManager instance { get; private set; }
     
-    [Header("0: music | 1: ambient | 2: sound effects")]
+    [Header("0: music | 1: ambient | 2: sound effects"), SerializeField]
     private AudioSource[] sources;
 
     void Awake()
@@ -20,7 +20,10 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        sources = this.GetComponents<AudioSource>();
+        if(sources == null)
+        {
+            Debug.LogError("Missing audio sources!!");
+        }
     }
 
     public void PlayMusic(AudioClip clip)
