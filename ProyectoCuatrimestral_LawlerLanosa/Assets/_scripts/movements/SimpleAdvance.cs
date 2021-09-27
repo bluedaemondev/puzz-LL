@@ -5,15 +5,17 @@ using UnityEngine;
 public class SimpleAdvance : IMover
 {
     float speed;
-    Transform myTransform;
+    Vector3 bodyPosition;
 
     public SimpleAdvance(Transform transf, float speed = 6)
     {
         this.speed = speed;
-        this.myTransform = transf;
+        this.bodyPosition = transf.position;
     }
-    public void Advance()
+    public Vector3 Advance()
     {
-        myTransform.position += Vector3.forward * speed * Time.deltaTime;
+        bodyPosition += Vector3.forward * speed * Time.deltaTime;
+        return bodyPosition;
     }
+    
 }

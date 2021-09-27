@@ -16,13 +16,15 @@ public class Hook
     public Hook SetHookMover(IMover newMovementType)
     {
         this.mover = newMovementType;
+
         if (mover == null)
             moveHandler = () => { return Vector3.zero; };
         else
-            moveHandler = newMovementType.Advance();
+            moveHandler = () => { return newMovementType.Advance(); };
 
         return this;
     }
+
     public Hook SetTargetPosition(Vector3 newTarget)
     {
         this.targetPosition = newTarget;
