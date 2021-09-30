@@ -5,41 +5,41 @@ using System;
 
 public class Hook
 {
-    private Transform bodyToMove;
-    private Vector3 targetPosition;
+    private Transform _bodyToMove;
+    private Vector3 _targetPosition;
+    private LineRenderer _rendererHook;
 
-    private IMover mover;
-
-    private Func<Vector3> moveHandler;
-
-    // Start is called before the first frame update
-    public Hook SetHookMover(IMover newMovementType)
+    public Hook()
     {
-        this.mover = newMovementType;
-
-        if (mover == null)
-            moveHandler = () => { return Vector3.zero; };
-        else
-            moveHandler = () => { return newMovementType.Advance(); };
-
-        return this;
+        this._rendererHook = null;
+    }
+    public Hook(LineRenderer rendererHook)
+    {
+        this._rendererHook = rendererHook;
     }
 
     public Hook SetTargetPosition(Vector3 newTarget)
     {
-        this.targetPosition = newTarget;
+        this._targetPosition = newTarget;
+        OnUpdateRope();
         return this;
     }
 
     public Hook SetBodyTransform(Transform bodyToMoveTransform)
     {
-        this.bodyToMove = bodyToMoveTransform;
+        this._bodyToMove = bodyToMoveTransform;
+        OnUpdateRope();
         return this;
     }
-
-    public void ArtificialUpdate()
+    public void OnUpdateRope()
     {
-        bodyToMove.position += moveHandler();
+        if (_rendererHook == null)
+            return;
+
+        this._rendererHook.SetPositions(new Vector3[0]);
+
+        this._rendererHook.SetPosition(0, _bodyToMove.position);
+        this._rendererHook.SetPosition(1, _targetPosition);
     }
 
 

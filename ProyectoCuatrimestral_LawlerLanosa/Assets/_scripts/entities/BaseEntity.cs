@@ -8,5 +8,12 @@ using UnityEngine;
 /// </summary>
 public abstract class BaseEntity : MonoBehaviour
 {
-    
+    protected IMover movementType;
+
+    public BaseEntity SetMovementType(IMover newMovementType)
+    {
+        this.movementType = newMovementType;
+
+        return this;
+    }
 }
