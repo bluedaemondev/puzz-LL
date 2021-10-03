@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : BaseEntity
 {
-    // Start is called before the first frame update
+    [SerializeField] PlayerInput _input;
+    [SerializeField] Hook _hook;
+    [SerializeField] Animator _animator;
+
+    // el player es responsable de su movimiento
+    // tiene una clase de animator controller para manejar estados
+
     void Start()
     {
-        
+        this.movementType = new FollowAdvance(transform, transform.position);
+        _input.onFingerUp = Move;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Move(Vector3 posDestination)
     {
-        
+        if (_animator)
+        {
+            _animator.SetBool("moving", true);
+        }
+
+        this.movementType.Advance();
     }
 }

@@ -31,15 +31,7 @@ public class PauseMenuController : MonoBehaviour
         // pause on => shouldPause = false
 
         pauseWindowContainer.SetActive(shouldPause);
-
-        if (!shouldPause)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
+        PauseManager.instance.isPaused = shouldPause;
     }
     public void LoadMainMenu()
     {
