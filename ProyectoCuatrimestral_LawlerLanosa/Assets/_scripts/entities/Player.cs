@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player : BaseEntity
 {
-    [SerializeField] PlayerInput input;
-    [SerializeField] Hook hook;
+    [SerializeField] PlayerInput _input;
+    [SerializeField] Hook _hook;
+    [SerializeField] Animator _animator;
 
     // el player es responsable de su movimiento
     // tiene una clase de animator controller para manejar estados
@@ -13,12 +14,16 @@ public class Player : BaseEntity
     void Start()
     {
         this.movementType = new FollowAdvance(transform, transform.position);
-        input.onFingerUp = Move;
+        _input.onFingerUp = Move;
     }
 
     private void Move(Vector3 posDestination)
     {
-        print("cambiar esto");
+        if (_animator)
+        {
+            _animator.SetBool("moving", true);
+        }
+
         this.movementType.Advance();
     }
 }

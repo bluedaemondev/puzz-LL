@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour
     {
 #if UNITY_ANDROID
         // Finger up, save target
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (!PauseManager.instance.isPaused && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out lastMouseRay))
             {
@@ -33,7 +33,7 @@ public class PlayerInput : MonoBehaviour
                 onFingerUp(lastMouseRay.point);
             }
 
-            Debug.Log(this.lastMouseRay);
+            Debug.Log(this.lastMouseRay.point);
         }
 #endif
     }
